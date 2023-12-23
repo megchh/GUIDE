@@ -1,0 +1,65 @@
+<div id="announce">Free standard Delivery min. spend $30</div>
+  <div class="background">
+<a href="/"><img src="/static/images/Logo.png" width="260px"  height="200" style="margin-left:4px; margin-top:40px;"></a>
+       <div class="container-fluid">
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit"  style="color:white">Search</button>
+         <a class="nav-link" href="/cart"><img class ="shop-bag" src="static/images/shopping-bag.png" width="50px" height="50px"/></a>
+        <a class="nav-link" href="#"><img class ="profile" src="static/images/profiledash.png" /></a>
+    </form>
+  </div>
+ <!----Navigation bar--->
+<nav class="navbar navbar-expand-sm justify-content-center" style="background-color:#FFEEDD">
+  <ul class="navbar-nav">
+    <li class="nav-item {% if current_url == '/' %}active{% endif %}">
+      <a class="nav-link" href="/">Home</a>
+    </li>
+<li class="nav-item {% if current_url == '/sustainability' %}active{% endif %}">
+      <a class="nav-link" href="/sustainability">sustainability</a>
+    </li>
+
+    <li class="nav-item {% if current_url == '/membership' %}active{% endif %}">
+      <a class="nav-link" href="/membership">Membership</a>
+    </li>
+      <!-- Add an ID to the Product dropdown -->
+<li id="productDropdown" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Product</a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Metallix</a></li>
+        <li><a class="dropdown-item" href="#">GreenTech</a></li>
+        <li><a class="dropdown-item" href="#">Restyle</a></li>
+        <li><a class="dropdown-item" href="#">Bio-Pack</a></li>
+    </ul>
+</li>
+      <li class="nav-item {% if current_url == '/contactus' %}active{% endif %}">
+      <a class="nav-link" href="/contactus">Contact Us</a>
+    </li>
+
+        </ul>
+</nav>
+      <div class="wordbanner">
+    <h1 class="first">
+        <span>Moving banner</span><span>Moving banner</span><span>Moving banner</span><span>Moving banner</span><span>Moving banner</span><span>Moving banner</span><span>Moving banner</span><span>Moving banner</span>
+    </h1>
+</div>
+        </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the Product dropdown element
+    var productDropdown = document.getElementById('productDropdown');
+
+    // Add an event listener for the shown.bs.dropdown event
+    productDropdown.addEventListener('shown.bs.dropdown', function () {
+        // Set the 'active' class when the dropdown is shown
+        productDropdown.classList.add('active');
+    });
+
+    // Add an event listener for the hidden.bs.dropdown event
+    productDropdown.addEventListener('hidden.bs.dropdown', function () {
+        // Remove the 'active' class when the dropdown is hidden
+        productDropdown.classList.remove('active');
+    });
+});
+</script>
