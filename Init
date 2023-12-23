@@ -1,0 +1,41 @@
+#Init File - used for routing
+from flask import Flask, render_template, request
+app = Flask(__name__)
+
+#Homepage
+@app.route('/')
+def home():
+    return render_template('index.html', current_url=request.path)
+
+#Sustainability
+@app.route('/sustainability')
+def sustainability():
+    return render_template('includes/sustainability.html', current_url=request.path)
+
+#Membership
+@app.route('/membership')
+def membership():
+    return render_template('includes/membership.html', current_url=request.path)
+
+#contact us
+@app.route('/contactus')
+def contact_us():
+     return render_template('includes/contactus.html', current_url=request.path)
+
+# cart
+@app.route('/cart')
+def cart():
+     return render_template('includes/shopping-cart.html')
+
+#customer profile dashboard
+@app.route('/customer-dashboard')
+def customer_dashboard():
+    return render_template('includes/customer_dashboard.html')
+
+# #products
+# @app.route('/')
+# def products():
+#     return render_template('products.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
