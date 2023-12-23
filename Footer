@@ -1,0 +1,61 @@
+<footer class="bg-dark footer">
+    <div class="footer-top py-8">
+        <div class="container">
+            <div class="row gy-5">
+                <div class="col-lg-8 pe-xxl-10">
+                    <div class="row gy-5">
+                        <div class="col-6 col-lg-4">
+                            <h5 class="text-black footer-title-01">About Us</h5>
+                            <ul class=" footer-link-01 m-0">
+                                <li><a class="text-black " href="/sustainability">Sustainability</a></li>
+                                <li><a class="text-black " href="/membership">Membership</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-lg-4">
+                            <h5 class="text-black footer-title-01">Products</h5>
+                            <ul class=" footer-link-01 m-0">
+                                <li><a class="text-black " href="#">Restyle</a></li>
+                                <li><a class="text-black " href="#">Metallix</a></li>
+                                <li><a class="text-black " href="#">BioPack</a></li>
+                                <li><a class="text-black " href="#">GreenTech</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-lg-4">
+                            <h5 class="text-black footer-title-01">Contact Us</h5>
+                            <ul class="footer-link-01 m-0">
+                                <li><a class="text-black " href="#">FAQ</a></li>
+                                 <li><a class="text-black " href="#">Terms &amp; Conditions</a></li>
+                                <li><a class="text-black " href="#">Shipping &amp; delivery</a></li>
+                                <li><a class="text-black " href="#">Payment Methods</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-black footer-title-01 fs-5">Subscribe to our newsletter!</h5>
+                    <div>
+                        <p class="fs-sm text-black ">Sign up for discounts,product updates,climate positivity,sustainable lifestyle advice and much more.</p>
+                        <form class="d-flex flex-row mb-2 p-1 input-group" >
+                            <input type="email" name="email" class="form-control " placeholder="Enter your e-mail" required> <button class="btn btn-secondary" type="submit">Subscribe</button>
+                        </form>
+                    </div>
+                    <div class="social-group">
+                        <a class="nav-link" href="#"><img class ="social" src="static/images/facebook.png"/> </a>
+                           </div>
+                         <div class="social-group">
+                  <a href="#"> <img class ="social" src="static/images/instagram.png"/></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom small py-3 border-10px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-left text-md-start py-1">
+                    <p class="m-0 text-black text-align-center "> © Reglow 2023</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
