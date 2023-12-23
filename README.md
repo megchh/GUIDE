@@ -9,4 +9,6 @@
 - 
 Create & Copy the INIT folder and paste in pycharm,make sure u create a new python file name init under your main directory
 
+
+#create and copy and paste the code of the Navigation file,footer.
 #copy the relevant files and paste it in
