@@ -1,12 +1,24 @@
 <div id="announce">Free standard Delivery min. spend $30</div>
   <div class="background">
-<a href="/"><img src="/static/images/Logo.png" width="260px"  height="200" style="margin-left:4px; margin-top:40px;"></a>
+<a href="/"><img src="static/images/Logo.png" width="260px"  height="200" style="margin-left:4px; margin-top:40px;"></a>
        <div class="container-fluid">
-    <form class="d-flex">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit"  style="color:white">Search</button>
-         <a class="nav-link" href="/cart"><img class ="shop-bag" src="static/images/shopping-bag.png" width="50px" height="50px"/></a>
-        <a class="nav-link" href="#"><img class ="profile" src="static/images/profiledash.png" /></a>
+  <!-- Modify the form to use the GET method and submit to the 'search_results' route -->
+<form class="d-flex" method="get" action="/search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query" required>
+    <button class="btn btn-outline-success" type="submit">Search</button>
+         <a class="nav-link" href="/cart"><img class ="shop-bag" src="static/images/bagshop.png" width="50px" height="50px"/></a>
+        <li id="profile-dropdown" class="nav-item dropdown">
+    <a class="nav-link" data-bs-toggle="dropdown" href="#">
+        <img class ="profile" src="static/images/profiledash.png" alt="profile page"/>
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/customer-dashboard">Profile</a></li>
+        <li><a class="dropdown-item" href="#">My Coupons</a></li>
+        <li><a class="dropdown-item" href="#">Purchase History</a></li>
+        <li><a class="dropdown-item" href="#">Logout</a></li>
+    </ul>
+        </li>
+
     </form>
   </div>
  <!----Navigation bar--->
@@ -16,17 +28,17 @@
       <a class="nav-link" href="/">Home</a>
     </li>
 <li class="nav-item {% if current_url == '/sustainability' %}active{% endif %}">
-      <a class="nav-link" href="/sustainability">sustainability</a>
+      <a class="nav-link" href="/sustainability">Sustainability</a>
     </li>
 
     <li class="nav-item {% if current_url == '/membership' %}active{% endif %}">
       <a class="nav-link" href="/membership">Membership</a>
     </li>
-      <!-- Add an ID to the Product dropdown -->
+      <!-- Product dropdown -->
 <li id="productDropdown" class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Product</a>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Metallix</a></li>
+        <li><a class="dropdown-item" href="/products">Metallix</a></li>
         <li><a class="dropdown-item" href="#">GreenTech</a></li>
         <li><a class="dropdown-item" href="#">Restyle</a></li>
         <li><a class="dropdown-item" href="#">Bio-Pack</a></li>
@@ -63,3 +75,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
