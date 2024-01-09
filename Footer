@@ -1,4 +1,4 @@
- <footer class="bg-dark footer">
+<footer class="bg-dark footer">
     <div class="footer-top py-8">
         <div class="container">
             <div class="row gy-5">
@@ -28,6 +28,7 @@
                                 <li><a class="text-black " href="#">Shipping &amp; delivery</a></li>
                                 <li><a class="text-black " href="#">Payment Methods</a></li>
                                 <li><a class="text-black " href="/contactus">Contact Us</a></li>
+                                <li><a class="text-black " href="#">For Suppliers</a></li>
                             </ul>
                         </div>
                     </div>
@@ -60,4 +61,5 @@
         </div>
     </div>
 </footer>
+
 
