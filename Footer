@@ -1,4 +1,4 @@
-<footer class="bg-dark footer">
+ <footer class="bg-dark footer">
     <div class="footer-top py-8">
         <div class="container">
             <div class="row gy-5">
@@ -27,6 +27,7 @@
                                  <li><a class="text-black " href="#">Terms &amp; Conditions</a></li>
                                 <li><a class="text-black " href="#">Shipping &amp; delivery</a></li>
                                 <li><a class="text-black " href="#">Payment Methods</a></li>
+                                <li><a class="text-black " href="/contactus">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>
@@ -40,10 +41,10 @@
                         </form>
                     </div>
                     <div class="social-group">
-                        <a class="nav-link" href="#"><img class ="social" src="static/images/facebook.png"/> </a>
+                        <a class="nav-link" href="https://www.facebook.com/go.Regloweco?mibextid=LQQJ4d"><img class ="social" src="static/images/facebook.png"/> </a>
                            </div>
                          <div class="social-group">
-                  <a href="#"> <img class ="social" src="static/images/instagram.png"/></a>
+                  <a href="https://www.instagram.com/go_reglow/"> <img class ="social" src="static/images/instagram.png"/></a>
                     </div>
                 </div>
             </div>
@@ -59,3 +60,4 @@
         </div>
     </div>
 </footer>
+
