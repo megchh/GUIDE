@@ -1,1 +1,501 @@
-Create a javascript file under static ,copy paste the codes of updated index and style and js. no changes to app 
+Create a javascript file under static make sure it is name javascript ,copy paste the codes of updated index and style and js. no changes to app 
+
+
+
+INDEX HTML:
+{% extends "base.html" %}
+{% block title %} Home {% endblock %}
+
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post" action="{{ url_for('login') }}">
+        <!-- Include the username field -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Log In</button>
+    </form>
+
+    <h2>Register</h2>
+    <form method="post" action="{{ url_for('signup') }}">
+        <!-- Adjust the form fields as needed -->
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <div id="chat-container">
+        <div id="chat-header" onclick="toggleChat()">
+            <span class="user-icon">👤</span> Chatbot
+            <span id="toggle-icon" class="close-icon">❌</span>
+        </div>
+        <div id="chat-body"></div>
+        <div id="input-container">
+            <form id="chat-form">
+                <input type="text" name="user_message" placeholder="Type your message" onkeypress="handleKeyPress(event)">
+                <button type="button" onclick="sendMessage()">Send</button>
+            </form>
+            <span class="bot-icon">🤖</span>
+        </div>
+    </div>
+
+    <button class="toggle-button" onclick="toggleChat()">👤</button>
+    <script src="{{ url_for('static', filename='javascript.js') }}"></script>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################javascript##########################################################
+
+
+    function toggleChat() {
+        var chatContainer = document.getElementById('chat-container');
+        chatContainer.style.display = (chatContainer.style.display === 'none' ||
+            chatContainer.style.display === '') ? 'block' : 'none';
+
+        // Clear chat when closing
+        if (chatContainer.style.display === 'none') {
+            $('#chat-body').empty();
+        }
+    }
+
+    function sendMessage() {
+        var userInput = $('input[name="user_message"]').val();
+
+        if (userInput) {
+            var chatBody = $('#chat-body');
+            var userMessage = '<div class="message user-message"><span class="user-icon">👤</span>' + userInput + '</div>';
+            chatBody.append(userMessage);
+
+            // You can implement logic to send the message via AJAX to your Flask server
+            $.ajax({
+                type: 'POST',
+                url: '/chat',
+                data: { user_message: userInput },
+                success: function (response) {
+                    if (response) {
+                        var botMessage = '<div class="message bot-message"><span class="bot-icon">🤖</span>' + response + '</div>';
+                        chatBody.append(botMessage);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error sending message:', error);
+                }
+            });
+
+            // Clear input field after sending message
+            $('input[name="user_message"]').val('');
+        }
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent form submission
+            sendMessage();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+###############STYLE##########################
+#logo{
+margin-top:40px;
+}
+#announce{
+background-color:#02571C;
+color:white;
+text-align:center;
+font-family:'open sans',sans-serif,'Arial';
+font-size:18px;
+font-weight:500;
+}
+.background{
+        background-color:#FFEEDD;
+        }
+.navbar-nav a,nav-item,#profile-dropdown{
+        font-size:20px;
+        font-family:'open sans',sans-serif,'Arial';
+        font-weight:Bold;
+        color:black;
+        margin-left:20px;
+        }
+
+#profile-dropdown,.navbar-nav a:hover{
+           color:#2AAF38;
+           text-decoration:hidden;
+        }
+
+.active{
+    color: #2AAF38;
+    text-decoration: underline;
+    text-decoration-color: #2AAF38;
+    text-decoration-thickness: 2px;
+    border-bottom: none;
+}
+
+/* footer style */
+footer{
+    display:flex;
+    flex-direction:column;
+    min-height:20vh;
+    margin-top:290px;
+    background-color:#FFEEDD;
+}
+.footer-top{
+    background-color:#FFEEDD;
+    overflow:hidden;
+}
+.wrapper{
+    flex:1;
+}
+ a {
+     text-decoration: none;
+     background-color: transparent;
+ }
+
+ .py-8 {
+     padding-top: 3.5rem ;
+     padding-bottom: 3.5rem ;
+ }
+
+ .footer-link-01 li+li {
+     padding-top: 0.8rem;
+ }
+
+ .footer-title-01 {
+     font-size: 16px;
+     margin: 0 0 20px;
+     font-weight: 600;
+     color:black
+ }
+
+ .footer-title-01 {
+     font-size: 16px;
+     margin: 0 0 20px;
+     font-weight: 600
+     color:black;
+     list-style:none;
+ }
+
+ .footer-link-01 li+li {
+     padding-top: .8rem
+     list-style:none;
+ }
+
+ @media (max-width: 991.98px) {
+     .footer-link-01 li+li {
+         padding-top: .6rem
+
+     }
+ }
+
+ .footer-link-01 a {
+     position: relative;
+     display: inline-block;
+     vertical-align: top
+ }
+
+ .footer-link-01 a:after {
+     content: "";
+     position: absolute;
+     bottom: 0;
+     left: auto;
+     right: 0;
+     width: 0;
+     height: 1px;
+     transition: ease all .35s;
+     background:#2AAF38;
+
+ }
+
+ .footer-link-01 a:hover:after {
+     left: 0;
+     right: auto;
+     width: 100%
+ }
+ .footer-bottom{
+ background-color:#FFEEDD;
+ font-weight:600;
+
+ }
+ li{
+  list-style:none;
+  text-align:left;
+  font-weight:bold;
+ }
+.btn{ /*subscribe button*/
+background-color:#02571C;
+font-weight:bold;
+width:100px;
+border:2px solid black;
+
+}
+.btn:hover{
+background-color:#1B4282;
+}
+/*Email box + search button*/
+.form-control{
+width:250px;
+color:black;
+margin-left:auto;
+margin-right:auto;
+border:2px solid black;
+background-color:white;
+}
+.container-fluid{
+margin-top:20px;
+margin-bottom:20px;
+
+}
+.shop-bag{
+margin-right:-14px;
+margin-left:20px;
+width:50px;
+height:52px;
+}
+
+/* profile drop down style*/
+#profile-dropdown .dropdown-menu {
+    background-color: white; /* Background color for dropdown menu */
+    border: 1px solid #ccc; /* Border color for dropdown menu */
+}
+
+#profile-dropdown .dropdown-item {
+    color: black;
+    font-weight:500;
+
+}
+#profile-dropdown .dropdown-item:active{
+color:#2AAF38;
+text-decoration:underline;
+text-decoration-thickness: 2px;
+background-color:transparent;
+}
+
+#profile-dropdown .profile {
+    width: 50px; /* Adjust the width of the profile image */
+    height: 50px; /* Adjust the height of the profile image */
+    margin-right:20px;
+    margin-left:18px;
+}
+
+/*social media footer icon style*/
+.social-group {
+    display: inline-block;
+    margin-right: 5px; /* margin side by side*/
+}
+
+.social {
+    width: 50px; /* Set the width as needed */
+    height: 50px; /* Set the height as needed */
+    margin-right: 5px; /* Adjust the margin as needed */
+}
+/* moving banner style*/
+ .wordbanner {
+            margin: 0;
+            padding: 0;
+            background-color: #1B4282;
+            overflow: hidden;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* photobanner */
+
+        .wordbanner span {
+            padding-right: 100px;
+            background-color: #1B4282;
+            color: white;
+            font-size: 15px;
+        }
+
+        /* keyframe animations */
+
+        .first {
+            display: inline-block;
+            white-space: nowrap;
+            -webkit-animation: bannermove 20s linear infinite;
+            -moz-animation: bannermove 20s linear infinite;
+            -ms-animation: bannermove 20s linear infinite;
+            -o-animation: bannermove 20s linear infinite;
+            animation: bannermove 20s linear infinite;
+        }
+
+        @keyframes bannermove {
+            0% {
+                margin-left: 100%; /* Move the content off-screen to the right */
+            }
+            100% {
+                margin-left: -100%; /* Move the content off-screen to the left */
+            }
+        }
+
+        @-moz-keyframes bannermove {
+            0% {
+                margin-left: 100%;
+            }
+            100% {
+                margin-left: -100%;
+            }
+        }
+
+        @-webkit-keyframes bannermove {
+            0% {
+                margin-left: 100%;
+            }
+            100% {
+                margin-left: -100%;
+            }
+        }
+
+        @-ms-keyframes bannermove {
+            0% {
+                margin-left: 100%;
+            }
+            100% {
+                margin-left: -100%;
+            }
+        }
+
+        @-o-keyframes bannermove {
+            0% {
+                margin-left: 100%;
+            }
+            100% {
+                margin-left: -100%;
+            }
+        }
+
+        .wordbanner h1 {
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+/* chat bot */
+
+
+
+        #chat-container {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            border: 1px solid #ccc;
+            width: 320px;
+            height: 400px; /* Adjusted height */
+            display: none;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #chat-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        #chat-body {
+            padding: 10px;
+            max-height: 330px; /* Adjusted max height */
+            overflow-y: auto;
+        }
+
+       #input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+input[name="user_message"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.message {
+    margin: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    max-width: 70%;
+}
+
+.user-message {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.bot-message {
+    background-color: #eee;
+    color: #333;
+}
+.toggle-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        padding: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
