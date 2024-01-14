@@ -14,10 +14,11 @@
                         <div class="col-6 col-lg-4">
                             <h5 class="text-black footer-title-01">Products</h5>
                             <ul class=" footer-link-01 m-0">
-                                <li><a class="text-black " href="#">Restyle</a></li>
-                                <li><a class="text-black " href="#">Metallix</a></li>
-                                <li><a class="text-black " href="#">BioPack</a></li>
-                                <li><a class="text-black " href="#">GreenTech</a></li>
+                                <li><a class="text-black " href="/products">Products Overview</a></li>
+                                <li><a class="text-black " href="/restyle">Restyle</a></li>
+                                <li><a class="text-black " href="/metallix">Metallix</a></li>
+                                <li><a class="text-black " href="/biopack">BioPack</a></li>
+                                <li><a class="text-black " href="/greentech">GreenTech</a></li>
                             </ul>
                         </div>
                         <div class="col-6 col-lg-4">
@@ -61,5 +62,3 @@
         </div>
     </div>
 </footer>
-
-
