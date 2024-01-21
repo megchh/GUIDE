@@ -1,92 +1,86 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, validators, ValidationError
-from wtforms.fields import EmailField, PasswordField, DateField, SelectField
+# payment transaction
+@app.route('/paymenttransaction', methods=['GET', 'POST'])
+def payment_transaction():
+    email_key = session.get('email')
 
-class CustomerSignUp(FlaskForm):
-    username = StringField('Username', [
-        validators.Length(min=1, max=150, message="Please enter a valid username."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    birthdate = DateField('Birthdate', format='%Y-%m-%d', validators=[
-        validators.DataRequired(message="This field is required.")
-    ])
-    email = EmailField('Email', [
-        validators.Email(message="Please enter a valid email address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    password = PasswordField('Password', [
-        validators.Length(min=8, max=32, message="Password must be at least 8 characters long."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    confirm_password = PasswordField('Confirm Password', [
-        validators.EqualTo('password', message='Passwords must match.'),
-        validators.DataRequired(message="This field is required.")
-    ])
+    if not email_key or email_key == 'guest':
+        session['email'] = 'checkout'
+        return redirect(url_for('customer_login'))
 
-class CustomerLogin(FlaskForm):
-    email = EmailField('Email', [
-        validators.Email(message="Please enter a valid email address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    password = PasswordField('Password', [
-        validators.DataRequired(message="This field is required.")
-    ])
+    db_customer = shelve.open('Shelves/Customer.db', 'r')
+    customer_data = db_customer.get('customer_key', {})
+    db_customer.close()
 
-class StaffLogin(FlaskForm):
-    email = EmailField('Email', [
-        validators.Email(message="Please enter a valid email address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    password = PasswordField('Password', [
-        validators.DataRequired(message="This field is required.")
-    ])
+    if email_key not in customer_data:
+        return redirect(url_for('customer_signup'))
 
-class StaffForgotPassword(FlaskForm):
-    email = EmailField('Email', [
-        validators.Email(message="Please enter a valid email address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    password = PasswordField('New Password', [
-        validators.DataRequired(message="This field is required.")
-    ])
+    customer = customer_data[email_key]
 
-class CustomerForgotPassword(FlaskForm):
-    email = EmailField('Email', [
-        validators.Email(message="Please enter a valid email address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    password = PasswordField('New Password', [
-        validators.DataRequired(message="This field is required.")
-    ])
+    payment_transaction_form = PaymentTransaction(request.form)
+    error = []
 
-class PaymentTransaction(FlaskForm):
-    name = StringField('Name on Card', [
-        validators.Length(min=1, max=150, message="Please enter a valid name."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    mobile_number = StringField('Mobile Number', [
-        validators.Length(min=8, max=8, message="Mobile number must be 8 digits long."),
-        validators.Regexp('^[0-9]+$', message="Mobile number must only contain numbers."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    email = EmailField('Email', [
-        validators.Email(message="Please enter a valid email address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    address = StringField('Address', [
-        validators.Length(min=3, max=150, message="Please enter a valid address."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    zipcode = StringField('Zipcode', [
-        validators.Length(min=6, max=6, message="Zipcode must be 6 digits long."),
-        validators.Regexp('^[0-9]+$', message="Zipcode must only contain numbers."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    card_number = StringField('Card Number', [
-        validators.Length(min=16, max=16, message="Card number must be 16 digits long."),
-        validators.DataRequired(message="This field is required.")
-    ])
-    expiry_month = SelectField('Expiry Month', choices=[
-        ('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'), ('5', 'May'), ('6', 'June'),
-        ('7', 'July'), ('8', 'August'), ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')
-    ], validators=[validators.DataRequired(message="This field is required.")])
+    if request.method == 'POST' and payment_transaction_form.validate():
+        db_payments = shelve.open('Shelves/Payments.db', 'c')
+        order_data = db_payments.get('OrderID', {})
+
+        if email_key == payment_transaction_form.email.data:
+            if not payment_transaction_form.name.data.isalpha() or payment_transaction_form.name.data.isspace():
+                error.append("Name must only contain letters.")
+            if len(payment_transaction_form.mobile_number.data) != 8 or not payment_transaction_form.mobile_number.data.isdigit():
+                error.append("Please enter a valid mobile number.")
+            if len(payment_transaction_form.zipcode.data) != 6 or not payment_transaction_form.zipcode.data.isdigit():
+                error.append("Please enter a valid zipcode.")
+
+            # Validate credit card number format
+            card_number = payment_transaction_form.card_number.data
+            if not re.match(r'^[4-5][0-9]{15}$', card_number) and not re.match(r'^3[47][0-9]{13}$', card_number):
+                error.append("Please enter a valid credit card number.")
+
+            exp_month = payment_transaction_form.expiry_month.data
+            if exp_month < datetime.datetime.now().date():
+                error.append("Please enter a valid expiry month.")
+
+            if not error:
+                # Access the birthdate field using the 'data' attribute
+                expmonth = payment_transaction_form.expiry_month.data
+                if expmonth is not None:
+                    payment_method = None
+                    if card_number.startswith('4'):
+                        payment_method = 'Visa'
+                    elif card_number.startswith('5'):
+                        payment_method = 'Mastercard'
+                    elif card_number.startswith(('34', '37')):
+                        payment_method = 'American Express'
+
+                    order = Customer.CustomerPaymentDetails(
+                        payment_transaction_form.name.data,
+                        payment_transaction_form.mobile_number.data,
+                        payment_transaction_form.email.data,
+                        customer.address,  # Assuming customer has address info
+                        payment_transaction_form.zipcode.data,
+                        card_number,
+                        expmonth.strftime('%m-%Y'),
+                        payment_method
+                    )
+
+                    order_id = str(uuid.uuid4())[:7]  # Generate a random order id
+                    order_data[order_id] = order
+                    db_payments['OrderID'] = order_data
+                    db_payments.close()
+
+                    return render_template(
+                        'includes/Transaction/Transaction_successful.html',
+                        order_id=order_id,
+                        current_url=request.path
+                    )
+                else:
+                    error.append("Please enter a valid expiry month.")
+        else:
+            error.append("Please use the same email you're logged in as.")
+
+    return render_template(
+        'includes/Transaction/paymenttransaction.html',
+        form=payment_transaction_form,
+        current_url=request.path,
+        error=error
+    )
