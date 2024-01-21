@@ -1,0 +1,92 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, validators, ValidationError
+from wtforms.fields import EmailField, PasswordField, DateField, SelectField
+
+class CustomerSignUp(FlaskForm):
+    username = StringField('Username', [
+        validators.Length(min=1, max=150, message="Please enter a valid username."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    birthdate = DateField('Birthdate', format='%Y-%m-%d', validators=[
+        validators.DataRequired(message="This field is required.")
+    ])
+    email = EmailField('Email', [
+        validators.Email(message="Please enter a valid email address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    password = PasswordField('Password', [
+        validators.Length(min=8, max=32, message="Password must be at least 8 characters long."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    confirm_password = PasswordField('Confirm Password', [
+        validators.EqualTo('password', message='Passwords must match.'),
+        validators.DataRequired(message="This field is required.")
+    ])
+
+class CustomerLogin(FlaskForm):
+    email = EmailField('Email', [
+        validators.Email(message="Please enter a valid email address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    password = PasswordField('Password', [
+        validators.DataRequired(message="This field is required.")
+    ])
+
+class StaffLogin(FlaskForm):
+    email = EmailField('Email', [
+        validators.Email(message="Please enter a valid email address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    password = PasswordField('Password', [
+        validators.DataRequired(message="This field is required.")
+    ])
+
+class StaffForgotPassword(FlaskForm):
+    email = EmailField('Email', [
+        validators.Email(message="Please enter a valid email address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    password = PasswordField('New Password', [
+        validators.DataRequired(message="This field is required.")
+    ])
+
+class CustomerForgotPassword(FlaskForm):
+    email = EmailField('Email', [
+        validators.Email(message="Please enter a valid email address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    password = PasswordField('New Password', [
+        validators.DataRequired(message="This field is required.")
+    ])
+
+class PaymentTransaction(FlaskForm):
+    name = StringField('Name on Card', [
+        validators.Length(min=1, max=150, message="Please enter a valid name."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    mobile_number = StringField('Mobile Number', [
+        validators.Length(min=8, max=8, message="Mobile number must be 8 digits long."),
+        validators.Regexp('^[0-9]+$', message="Mobile number must only contain numbers."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    email = EmailField('Email', [
+        validators.Email(message="Please enter a valid email address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    address = StringField('Address', [
+        validators.Length(min=3, max=150, message="Please enter a valid address."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    zipcode = StringField('Zipcode', [
+        validators.Length(min=6, max=6, message="Zipcode must be 6 digits long."),
+        validators.Regexp('^[0-9]+$', message="Zipcode must only contain numbers."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    card_number = StringField('Card Number', [
+        validators.Length(min=16, max=16, message="Card number must be 16 digits long."),
+        validators.DataRequired(message="This field is required.")
+    ])
+    expiry_month = SelectField('Expiry Month', choices=[
+        ('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'), ('5', 'May'), ('6', 'June'),
+        ('7', 'July'), ('8', 'August'), ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')
+    ], validators=[validators.DataRequired(message="This field is required.")])
